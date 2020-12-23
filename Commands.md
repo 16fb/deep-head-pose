@@ -6,9 +6,6 @@ $ python code/test_on_video_dlib.py --snapshot <PATH TO SNAPSHOT> --face_model P
 Download models from Google Drive
 
 python code/test_on_video_dlib.py --snapshot \models\hopenet_robust_alpha1.pkl --face_model  --video conan-cruise.gif --fps 15 --n_frames 9999
-
-
-
 # Run in container::
 $ singularity shell --nv pytorch110
 
@@ -17,35 +14,10 @@ Apprently it binds $HOME and not the current directory...
 ## Try bind Working Dir to 
 $ singularity shell -B "$PWD":/PWD --nv pytorch110
 
-## print without parentheses, python error.
-Seems to be a python 2 vs python 3 thing. 
-(https://www.google.com/search?q=calling+print+without+parentheses+python&rlz=1C1CHBF_enSG788SG788&oq=calling+print+without+parent&aqs=chrome.1.69i57j33i22i29i30l4.5422j0j7&sourceid=chrome&ie=UTF-8)
 
 
 
-# Run in ANACONDA
-conda activate pytorch
-conda install python=2
-conda install numpy
-conda install matplotlib
 
-## Seems like conda forge has a proper variant for opencv
-conda install -c conda-forge opencv
-## try install older ver of pytorch
-conda install pytorch==1.1.0 torchvision==0.3.0 cudatoolkit=10.0 -c pytorch
-
-
-# Run ANACONDA Pytorch python3.x
-conda create -n pytorch python pytorch opencv   
-conda install numpy
-conda install matplotlib
-conda install pytorch
-
-## testing
-conda install torchvision cudatoolkit -c pytorch
-
-## Run this at home
-conda install pytorch torchvision torchaudio cudatoolkit=10.2 -c pytorch
 
 
 ### Notes
@@ -62,16 +34,42 @@ conda install matplotlib
 conda install pandas
 conda install scipy
 conda install -c anaconda scikit-image
+
+conda install -c anaconda cmake
+
 conda install -c conda-forge dlib    [wtf, need python 2.7/3.4/3.5] [lets try conda-forge]
+conda install -c menpo dlib [gives me version problems]
+conda install python=3.5
+
 
 ## situation
+no module named dlib, and cannot install.
+=> still same thing
 theres like 5 billion conflicts... wtf
 
-
-## Error [removed in pytorch 1.0]
-no module named 'torch.utils.serialization'
+why the fuck do they not say their modules  
 
 
-## Different version of pytorch
-conda create --name pytorch1.1 python=2.7
-conda install pytorch==1.0.1 torchvision==0.2.2 cudatoolkit=10.0 -c pytorch
+python code/test_on_video_dlib.py --snapshot \models\hopenet_robust_alpha1.pkl --face_model dlib\mmod_human_face_detector.dat  --video conan-cruise.gif --fps 15 --n_frames 9999
+
+## lets try with different version of python :^)
+conda create -n pytorch python=3.5
+conda install pytorch torchvision torchaudio cudatoolkit=10.1 -c pytorch
+conda install opencv
+conda install matplotlib
+conda install pandas
+conda install scipy
+conda install -c anaconda scikit-image
+conda install -c anaconda cmake
+conda install -c menpo dlib [gives me version problems]
+
+
+conda install -c conda-forge opencv    [wtf, need python 2.7/3.4/3.5] [lets try conda-forge]
+conda install -c conda-forge dlib    [wtf, need python 2.7/3.4/3.5] [lets try conda-forge]
+conda install -c menpo dlib [gives me version problems]
+
+## holy fuck will this just work???
+conda create -n pytorchNew python pytorch torchvision torchaudio cudatoolkit=10.1 opencv matplotlib pandas scipy scikit-image cmake dlib
+-c conda-forge -c pytorch
+
+
