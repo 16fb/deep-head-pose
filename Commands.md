@@ -49,8 +49,8 @@ theres like 5 billion conflicts... wtf
 
 why the fuck do they not say their modules  
 
-
-python code/test_on_video_dlib.py --snapshot \models\hopenet_robust_alpha1.pkl --face_model dlib\mmod_human_face_detector.dat  --video conan-cruise.gif --fps 15 --n_frames 9999
+## Run Code
+python code/test_on_video_dlib.py --snapshot models\hopenet_robust_alpha1.pkl --face_model dlib\mmod_human_face_detector.dat  --video conan-cruise.gif --fps 15 --n_frames 100
 
 ## lets try with different version of python :^)
 conda create -n pytorch python=3.5
