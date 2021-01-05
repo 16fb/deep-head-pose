@@ -69,7 +69,7 @@ conda install -c conda-forge dlib    [wtf, need python 2.7/3.4/3.5] [lets try co
 conda install -c menpo dlib [gives me version problems]
 
 ## holy fuck will this just work???
-conda create -n pytorchNew python pytorch torchvision torchaudio cudatoolkit=10.1 opencv matplotlib pandas scipy scikit-image cmake dlib
--c conda-forge -c pytorch
+conda create -n pytorchNew python pytorch torchvision torchaudio cudatoolkit=10.1 opencv matplotlib pandas scipy scikit-image cmake dlib -c conda-forge -c pytorch
+
 
 
