@@ -52,6 +52,9 @@ why the fuck do they not say their modules
 ## Run Code
 python code/test_on_video_dlib.py --snapshot models\hopenet_robust_alpha1.pkl --face_model dlib\mmod_human_face_detector.dat  --video conan-cruise.gif --fps 15 --n_frames 100
 
+Use New Model:
+python code/test_on_video_dlib.py --snapshot models\mysnap_epoch_29.pkl --face_model dlib\mmod_human_face_detector.dat  --video conan-cruise.gif --fps 15 --n_frames 100
+
 ## lets try with different version of python :^)
 conda create -n pytorch python=3.5
 conda install pytorch torchvision torchaudio cudatoolkit=10.1 -c pytorch

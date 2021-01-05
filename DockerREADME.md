@@ -88,7 +88,7 @@ What exactly is the problem
 So.... seems like....
 A) Wait for full release
 B) Debug current release, and try get experimental current release to work
-C) Use a VM, no idea how sucessful.
+C) Use a VM, no idea how sucessful. -> Nope, hyper-v doesnt work.
 D) Run on Alienware Laptop
 
 More Info about docker support
