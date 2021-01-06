@@ -27,8 +27,8 @@ conda create --name <env> --file requirements.txt  # Rebuild Environment
 
 ## Build + Push Container
 ```
-docker build -t deep-head-pose-latest .
-docker push 16fb/deepheadpose:deep-head-pose-latest
+docker build -t 16fb/deepheadpose:latest .
+docker push 16fb/deepheadpose:latest
 ```
 
 ## Error/Problems
@@ -105,4 +105,24 @@ conda activate pytorch
 ### I assume use "/" because its Linux fs
 python code/test_on_video_dlib.py --snapshot models/hopenet_robust_alpha1.pkl --face_model dlib/mmod_human_face_detector.dat  --video conan-cruise.gif --fps 15 --n_frames 10
 
+**Use New Model:**
+python code/test_on_video_dlib.py --snapshot models\mysnap_epoch_29.pkl --face_model dlib\mmod_human_face_detector.dat  --video conan-cruise.gif --fps 15 --n_frames 100
+
 ```
+
+## Stuff Do Now
+test new model works => works on conda
+build into container => Built
+test if get GPU error
+push container => Pushing
+
+## Import + Export Image to .tar file
+Theres no progress bar:
+
+Save to tar file
+* `docker save --output <FileName> <ImageName>`
+* `docker save --output deepheadpose 16fb/deepheadpose:latest`
+
+Load from tar file
+* `docker load --input <FileName>`
+* `docker load --input deepheadpose`

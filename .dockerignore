@@ -1,3 +1,7 @@
+### Ignore Old Directories and Output
 output/
 old_dlib_model/
 old_models/
+
+### Ignore GIt
+.git
