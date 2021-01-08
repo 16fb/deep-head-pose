@@ -15,7 +15,9 @@ ARG requirementsPATH=requirements.txt
 WORKDIR /home/deep-head-pose
 
 ### Install Anaconda + Libraries
-RUN conda create -n ${ENVIRONMENTNAME} python pytorch torchvision torchaudio cudatoolkit=10.1 opencv matplotlib pandas scipy scikit-image cmake dlib -c conda-forge -c pytorch
+RUN conda create -n ${ENVIRONMENTNAME} -y python=3.7 pytorch torchvision torchaudio cudatoolkit=11.0 -c pytorch
+RUN conda install -n ${ENVIRONMENTNAME} -y opencv matplotlib pandas scipy scikit-image cmake dlib -c conda-forge -c pytorch
+
 
 ### Additional library needed
 RUN apt update && \

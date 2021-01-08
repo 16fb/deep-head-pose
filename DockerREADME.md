@@ -1,16 +1,16 @@
 # Plan
-Use Anaconda3 container, install all the modules currently i use.
+* Use Anaconda3 container, install all the modules currently i use.
 
-Code is using a branch/PR that supports python3.
+* Code is using a branch/PR that supports python3.
 
-have container copy over model + dlib library.
+* have container copy over model + dlib library.
 
-then build + test.
+* then build + test.
 
 
 ## Info about docker-anaconda 3
-[Link to dockerhub](https://hub.docker.com/r/continuumio/anaconda3)
-Anaconda distribution is installed into the /opt/conda
+[Link to dockerhub](https://hub.docker.com/r/continuumio/anaconda3)   \
+Anaconda distribution is installed into the /opt/conda    \
 Ensures that the default user has the conda command in their path.
 
 ## Output list of installed libraries on conda
@@ -22,15 +22,7 @@ Conda is installed in 'pytorchNew' envrionment
 conda activate pytorchNew
 conda list -e > requirements.txt
 conda create --name <env> --file requirements.txt  # Rebuild Environment
-
 ```
-
-## Build + Push Container
-```
-docker build -t 16fb/deepheadpose:latest .
-docker push 16fb/deepheadpose:latest
-```
-
 ## Error/Problems
 **Problem**: Anaconda Environment is for windows.
 Will have error porting over to Linux.
@@ -81,24 +73,31 @@ Apparently preview builds have WSL2 with Nvidia support on windows
 [Mentioned Here](https://www.docker.com/blog/wsl-2-gpu-support-is-here/)
 -> Can do, but seems experimental.
 
-What exactly is the problem
--> is container cuda capabable, and does it run well.   =+=>>> Try see if cuda containers work.
--> have i really never used gpu in containers before....
-
-So.... seems like....
-A) Wait for full release
-B) Debug current release, and try get experimental current release to work
-C) Use a VM, no idea how sucessful. -> Nope, hyper-v doesnt work.
-D) Run on Alienware Laptop
-
 More Info about docker support
 (https://stackoverflow.com/questions/49589229/is-gpu-pass-through-possible-with-docker-for-windows#:~:text=Update%20(October%202019)%3A%20nvidia,but%20not%20a%20Linux%20container.)
 
-**Soluation**:
+**Solution**:
+* A) Wait for full release of Windows GPU support
+* B) Use Preview Build
+* C) Run on Alienware Laptop
+
+
+**Problem**: 
+Pytorch Version auto finds CPU only variant of pytorch
+
+**Solution**: 
+Create conda environment with only pytorch dependacies.  \
+Then conda install the rest separately.
+
+## Build + Push Container
+```
+docker build -t 16fb/deepheadpose:GPU .
+docker push 16fb/deepheadpose:GPU
+```
 ### Testing Container
 ```
 ### Run interactively and expose GPU
-docker run -it --gpus all deep-head-pose-latest
+docker run -it --gpus all 16fb/deepheadpose:GPU
 
 conda activate pytorch
 
@@ -106,15 +105,9 @@ conda activate pytorch
 python code/test_on_video_dlib.py --snapshot models/hopenet_robust_alpha1.pkl --face_model dlib/mmod_human_face_detector.dat  --video conan-cruise.gif --fps 15 --n_frames 10
 
 **Use New Model:**
-python code/test_on_video_dlib.py --snapshot models\mysnap_epoch_29.pkl --face_model dlib\mmod_human_face_detector.dat  --video conan-cruise.gif --fps 15 --n_frames 100
+python code/test_on_video_dlib.py --snapshot models/mysnap_epoch_29.pkl --face_model dlib/mmod_human_face_detector.dat  --video conan-cruise.gif --fps 15 --n_frames 100
 
 ```
-
-## Stuff Do Now
-test new model works => works on conda
-build into container => Built
-test if get GPU error
-push container => Pushing
 
 ## Import + Export Image to .tar file
 Theres no progress bar:
