@@ -1,16 +1,16 @@
 # Plan
-Use Anaconda3 container, install all the modules currently i use.
+* Use Anaconda3 container, install all the modules currently i use.
 
-Code is using a branch/PR that supports python3.
+* Code is using a branch/PR that supports python3.
 
-have container copy over model + dlib library.
+* have container copy over model + dlib library.
 
-then build + test.
+* then build + test.
 
 
 ## Info about docker-anaconda 3
-[Link to dockerhub](https://hub.docker.com/r/continuumio/anaconda3)
-Anaconda distribution is installed into the /opt/conda
+[Link to dockerhub](https://hub.docker.com/r/continuumio/anaconda3)   \
+Anaconda distribution is installed into the /opt/conda    \
 Ensures that the default user has the conda command in their path.
 
 ## Output list of installed libraries on conda
@@ -22,15 +22,7 @@ Conda is installed in 'pytorchNew' envrionment
 conda activate pytorchNew
 conda list -e > requirements.txt
 conda create --name <env> --file requirements.txt  # Rebuild Environment
-
 ```
-
-## Build + Push Container
-```
-sudo docker build -t 16fb/deepheadpose:GPU .
-sudo docker push 16fb/deepheadpose:GPU
-```
-
 ## Error/Problems
 **Problem**: Anaconda Environment is for windows.
 Will have error porting over to Linux.
@@ -81,29 +73,31 @@ Apparently preview builds have WSL2 with Nvidia support on windows
 [Mentioned Here](https://www.docker.com/blog/wsl-2-gpu-support-is-here/)
 -> Can do, but seems experimental.
 
-What exactly is the problem
--> is container cuda capabable, and does it run well.   =+=>>> Try see if cuda containers work.
--> have i really never used gpu in containers before....
-
-So.... seems like....
-A) Wait for full release
-B) Debug current release, and try get experimental current release to work
-C) Use a VM, no idea how sucessful. -> Nope, hyper-v doesnt work.
-D) Run on Alienware Laptop
-
 More Info about docker support
 (https://stackoverflow.com/questions/49589229/is-gpu-pass-through-possible-with-docker-for-windows#:~:text=Update%20(October%202019)%3A%20nvidia,but%20not%20a%20Linux%20container.)
 
-**Soluation**:
+**Solution**:
+* A) Wait for full release of Windows GPU support
+* B) Use Preview Build
+* C) Run on Alienware Laptop
+
+
+**Problem**: 
+Pytorch Version auto finds CPU only variant of pytorch
+
+**Solution**: 
+Create conda environment with only pytorch dependacies.  \
+Then conda install the rest separately.
+
+## Build + Push Container
+```
+docker build -t 16fb/deepheadpose:GPU .
+docker push 16fb/deepheadpose:GPU
+```
 ### Testing Container
 ```
 ### Run interactively and expose GPU
-
-sudo docker build -t 16fb/deepheadpose:GPU .
-
-docker run -it --gpus all deep-head-pose-latest
-
-sudo docker run -it --gpus all 16fb/deepheadpose:GPU
+docker run -it --gpus all  -v ${PWD}/toMount:/home/deep-head-pose/mount 16fb/deepheadpose:GPU
 
 conda activate pytorch
 
@@ -113,25 +107,18 @@ python code/test_on_video_dlib.py --snapshot models/hopenet_robust_alpha1.pkl --
 **Use New Model:**
 python code/test_on_video_dlib.py --snapshot models/mysnap_epoch_29.pkl --face_model dlib/mmod_human_face_detector.dat  --video conan-cruise.gif --fps 15 --n_frames 100
 
+**Use New Model:**
+python code/test_on_video_dlib.py --snapshot models/mysnap_epoch_29.pkl --face_model dlib/mmod_human_face_detector.dat  --video mount/conan-cruise.gif --fps 15 --n_frames 100
+
 ```
 
-## Stuff Do Now
-test new model works => works on conda
-build into container => Built
-test if get GPU error
-push container => Pushing
+## How to run on different image
+Ideally using bind mounts:
+`-v <Source Directory>:<Container Directory>`
 
-Running on Alienware 
--> same issue, tho for now i know alienware can run GPU, seems to be a configuration issue with torch.cuda
-maybe because when built no GPU ability?
+### Bind /toMount directory to WORKDIR/mount
+`-v /toMount:/home/deep-head-pose/mount`
 
-Put warning about using whose docker profile
-
-## huh
-apparently you change a part to CPU, feels like wrong tho
-
-what. torch not compiled with CUDA enabled???
-Apparnetly iam inistalling CPU only build of pytorch...
 
 ## Import + Export Image to .tar file
 Theres no progress bar:
@@ -143,24 +130,3 @@ Save to tar file
 Load from tar file
 * `docker load --input <FileName>`
 * `docker load --input deepheadpose`
-
-## Docker Login + Push
-`sudo docker login --username=yourhubusername --email=youremail@company.com`
-
-`sudo docker push yourhubusername/verse_gapminder`
-`sudo docker push 16fb/deepheadpose:GPU`
-
-## Git Login 
-### add username
-`git config --global user.name "your_username"`
-`git config user.name "16fb"`
-
-
-### Add email
-`git config --global user.email "your_email_address@example.com"`
-`git config user.email "toomuchdarius@gmail.com"`
-
-
-### Check global config
-`git config --global --list`
-`git config --list`

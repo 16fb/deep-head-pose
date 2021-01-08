@@ -2,5 +2,11 @@
 *.npy
 data/*
 output/*
+
+## Ignore images, allow gifs
 *.jpg
 *.png
+
+### Ignore Data and Snapshot files
+*.pkl
+*.dat

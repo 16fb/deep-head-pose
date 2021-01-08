@@ -19,7 +19,6 @@ RUN conda create -n ${ENVIRONMENTNAME} -y python=3.7 pytorch torchvision torchau
 RUN conda install -n ${ENVIRONMENTNAME} -y opencv matplotlib pandas scipy scikit-image cmake dlib -c conda-forge -c pytorch
 
 
-
 ### Additional library needed
 RUN apt update && \
     apt install -y libgl1-mesa-glx
