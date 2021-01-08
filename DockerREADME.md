@@ -97,7 +97,7 @@ docker push 16fb/deepheadpose:GPU
 ### Testing Container
 ```
 ### Run interactively and expose GPU
-docker run -it --gpus all 16fb/deepheadpose:GPU
+docker run -it --gpus all  -v ${PWD}/toMount:/home/deep-head-pose/mount 16fb/deepheadpose:GPU
 
 conda activate pytorch
 
@@ -107,7 +107,18 @@ python code/test_on_video_dlib.py --snapshot models/hopenet_robust_alpha1.pkl --
 **Use New Model:**
 python code/test_on_video_dlib.py --snapshot models/mysnap_epoch_29.pkl --face_model dlib/mmod_human_face_detector.dat  --video conan-cruise.gif --fps 15 --n_frames 100
 
+**Use New Model:**
+python code/test_on_video_dlib.py --snapshot models/mysnap_epoch_29.pkl --face_model dlib/mmod_human_face_detector.dat  --video mount/conan-cruise.gif --fps 15 --n_frames 100
+
 ```
+
+## How to run on different image
+Ideally using bind mounts:
+`-v <Source Directory>:<Container Directory>`
+
+### Bind /toMount directory to WORKDIR/mount
+`-v /toMount:/home/deep-head-pose/mount`
+
 
 ## Import + Export Image to .tar file
 Theres no progress bar:
