@@ -27,8 +27,8 @@ conda create --name <env> --file requirements.txt  # Rebuild Environment
 
 ## Build + Push Container
 ```
-docker build -t 16fb/deepheadpose:latest .
-docker push 16fb/deepheadpose:latest
+sudo docker build -t 16fb/deepheadpose:GPU .
+sudo docker push 16fb/deepheadpose:GPU
 ```
 
 ## Error/Problems
@@ -98,7 +98,12 @@ More Info about docker support
 ### Testing Container
 ```
 ### Run interactively and expose GPU
+
+sudo docker build -t 16fb/deepheadpose:GPU .
+
 docker run -it --gpus all deep-head-pose-latest
+
+sudo docker run -it --gpus all 16fb/deepheadpose:GPU
 
 conda activate pytorch
 
@@ -106,7 +111,7 @@ conda activate pytorch
 python code/test_on_video_dlib.py --snapshot models/hopenet_robust_alpha1.pkl --face_model dlib/mmod_human_face_detector.dat  --video conan-cruise.gif --fps 15 --n_frames 10
 
 **Use New Model:**
-python code/test_on_video_dlib.py --snapshot models\mysnap_epoch_29.pkl --face_model dlib\mmod_human_face_detector.dat  --video conan-cruise.gif --fps 15 --n_frames 100
+python code/test_on_video_dlib.py --snapshot models/mysnap_epoch_29.pkl --face_model dlib/mmod_human_face_detector.dat  --video conan-cruise.gif --fps 15 --n_frames 100
 
 ```
 
@@ -115,6 +120,18 @@ test new model works => works on conda
 build into container => Built
 test if get GPU error
 push container => Pushing
+
+Running on Alienware 
+-> same issue, tho for now i know alienware can run GPU, seems to be a configuration issue with torch.cuda
+maybe because when built no GPU ability?
+
+Put warning about using whose docker profile
+
+## huh
+apparently you change a part to CPU, feels like wrong tho
+
+what. torch not compiled with CUDA enabled???
+Apparnetly iam inistalling CPU only build of pytorch...
 
 ## Import + Export Image to .tar file
 Theres no progress bar:
@@ -126,3 +143,24 @@ Save to tar file
 Load from tar file
 * `docker load --input <FileName>`
 * `docker load --input deepheadpose`
+
+## Docker Login + Push
+`sudo docker login --username=yourhubusername --email=youremail@company.com`
+
+`sudo docker push yourhubusername/verse_gapminder`
+`sudo docker push 16fb/deepheadpose:GPU`
+
+## Git Login 
+### add username
+`git config --global user.name "your_username"`
+`git config user.name "16fb"`
+
+
+### Add email
+`git config --global user.email "your_email_address@example.com"`
+`git config user.email "toomuchdarius@gmail.com"`
+
+
+### Check global config
+`git config --global --list`
+`git config --list`
