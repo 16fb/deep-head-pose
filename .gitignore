@@ -1,4 +1,6 @@
+## Ignore pycache
 *.pyc
+
 *.npy
 data/*
 output/*
@@ -7,6 +9,6 @@ output/*
 *.jpg
 *.png
 
-### Ignore Data and Snapshot files
+## Ignore Data and Snapshot files
 *.pkl
 *.dat
