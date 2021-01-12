@@ -115,8 +115,6 @@ python code/test_on_video_dlib.py --snapshot models/mysnap_epoch_29.pkl --face_m
 ## How to run on different image
 Ideally using bind mounts:   \
 `-v <Source Directory>:<Container Directory>`   \
-
-
 Place .gif into "toMount" directory, then bind mount into container as "mount/".    \
 -> Reference the new gif for data.
 ### Bind /toMount directory to WORKDIR/mount
