@@ -82,7 +82,36 @@ Theres no progress bar:
 Save to tar file
 * `docker save --output <FileName> <ImageName>`
 * `docker save --output deepheadpose 16fb/deepheadpose:latest`
+docker save --output deepheadpose 16fb/deepheadpose:ZX
 
 Load from tar file
 * `docker load --input <FileName>`
 * `docker load --input deepheadpose`
+
+# Testing without docker
+## Testing base video deep-head-pose
+`conda activate pytorchNew`  
+`python code/test_on_video_dlib.py --snapshot models/mysnap_epoch_29.pkl --face_model dlib/mmod_human_face_detector.dat  --video conan-cruise.gif --fps 15 --n_frames 100`  
+ 
+Notes:  
+Its quite slow for video
+
+## Testing ZX Video deep-head-pose
+`conda activate pytorchNew`  
+`python code/i.py --snapshot models/mysnap_epoch_29.pkl --face_model dlib/mmod_human_face_detector.dat  --video conan-cruise.gif --fps 15 --n_frames 100`  
+
+Notes:  
+Had to set face model to take in from args.  
+Still quite slow.  
+It does show obtained tensors.  
+
+## Testing ZX Webcam deep-head-pose
+`conda activate pytorchNew`  
+`python code/i_webcam.py --snapshot models/mysnap_epoch_29.pkl --face_model dlib/mmod_human_face_detector.dat  --video conan-cruise.gif --fps 15 --n_frames 100`  
+
+Notes:  
+Very Very Very Slow.  
+
+**Removed the wait key at the end of i_webcam.py.**   
+no dice.
+## CUDNN INSTALL
