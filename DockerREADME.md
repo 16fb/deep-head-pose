@@ -114,4 +114,9 @@ Very Very Very Slow.
 
 **Removed the wait key at the end of i_webcam.py.**   
 no dice.
-## CUDNN INSTALL
+
+# Attempts at making it run faster.
+conda activate test
+conda create --name test
+conda install python pytorch torchvision torchaudio cudatoolkit=11.0 -c pytorch
+conda install opencv matplotlib pandas scipy scikit-image cmake dlib
