@@ -133,12 +133,15 @@ if __name__ == '__main__':
         ret,frame = video.read() 
         
         if ret == False:
+            print("Returned False, Break;")
             break
 
         cv2_frame = cv2.cvtColor(frame,cv2.COLOR_BGR2RGB) #original in bgr. need to convert to rgb
 
         # Dlib detect
         dets = cnn_face_detector(cv2_frame, 1) #face detector for cropping
+
+        
         #cv2.imshow("face",frame)
         
 

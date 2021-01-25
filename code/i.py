@@ -151,7 +151,7 @@ if __name__ == '__main__':
             conf = det.confidence
 
             ### NOTE: changed confidence
-            if conf > 0.01: #if face detected, crop image
+            if conf > 1 #if face detected, crop image
                 bbox_width = abs(x_max - x_min)#get width of face
                 bbox_height = abs(y_max - y_min)#get height of face
                 x_min -= 2 * bbox_width // 4 #calculate values for cropping

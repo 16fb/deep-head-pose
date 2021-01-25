@@ -116,7 +116,18 @@ Very Very Very Slow.
 no dice.
 
 # Attempts at making it run faster.
-conda activate test
+## test env, which wants use latest version of libs
 conda create --name test
+conda activate test
 conda install python pytorch torchvision torchaudio cudatoolkit=11.0 -c pytorch
-conda install opencv matplotlib pandas scipy scikit-image cmake dlib
+conda install opencv matplotlib pandas scipy scikit-image cmake dlib -c conda-forge
+
+
+## ZX anaconda
+conda create --name ZX --file conda.txt
+conda install torchvision
+
+
+
+Thers no torchvision... what?
+no ski-image
