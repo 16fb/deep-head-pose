@@ -128,7 +128,7 @@ if __name__ == '__main__':
     frame_num = 1
 #video.isOpened()
     while (video.isOpened()):
-        print(frame_num)
+        print("Frame " + str(frame_num))
 
         ret,frame = video.read() 
         
@@ -138,9 +138,14 @@ if __name__ == '__main__':
 
         cv2_frame = cv2.cvtColor(frame,cv2.COLOR_BGR2RGB) #original in bgr. need to convert to rgb
 
-        # Dlib detect
+        # Dlib detect, return list of face-box
         dets = cnn_face_detector(cv2_frame, 1) #face detector for cropping
 
+
+        #This detector returns a mmod_rectangles object. This object contains a list of mmod_rectangle objects.
+        #These objects can be accessed by simply iterating over the mmod_rectangles object
+        #The mmod_rectangle object has two member variables, a dlib.rectangle object, and a confidence score.
+        #[Documentation](http://dlib.net/cnn_face_detector.py.html)
         
         #cv2.imshow("face",frame)
         
@@ -154,6 +159,8 @@ if __name__ == '__main__':
             conf = det.confidence
 
             if conf > 1.0: #if face detected, crop image
+                print("Face Detected")
+
                 bbox_width = abs(x_max - x_min)#get width of face
                 bbox_height = abs(y_max - y_min)#get height of face
                 x_min -= 2 * bbox_width // 4 #calculate values for cropping
@@ -162,6 +169,7 @@ if __name__ == '__main__':
                 y_max += bbox_height // 4
                 x_min = max(x_min, 0); y_min = max(y_min, 0)
                 x_max = min(frame.shape[1], x_max); y_max = min(frame.shape[0], y_max)
+
                 # Crop image
                 img = cv2_frame[y_min:y_max,x_min:x_max]
                 img = Image.fromarray(img)
@@ -190,25 +198,23 @@ if __name__ == '__main__':
                 # Plot expanded bounding box
                 # cv2.rectangle(frame, (x_min, y_min), (x_max, y_max), (0,255,0), 1)
                 #cv2.waitKey(0)
-                cv2.putText(frame, str(yaw_predicted), (00,250), cv2.FONT_HERSHEY_SIMPLEX , 1,  
-                 (0, 0, 255) , 2, cv2.LINE_AA, False)
+                cv2.putText(frame, str(yaw_predicted), (00,250), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2, cv2.LINE_AA, False)
+
                 print (yaw_predicted)
+
                 if yaw_predicted>48 or yaw_predicted<-48:
-                    cv2.putText(frame, "HEAD IS NOT FACING STRAIGHT", (00,185), cv2.FONT_HERSHEY_SIMPLEX , 1,  
-                 (0, 0, 255) , 2, cv2.LINE_AA, False)
-               
+                    cv2.putText(frame, "HEAD IS NOT FACING STRAIGHT", (00,185), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2, cv2.LINE_AA, False)
                 else:
-                    cv2.putText(frame, "Normal", (00,185), cv2.FONT_HERSHEY_SIMPLEX , 1,  
-                 (0, 0, 255) , 2, cv2.LINE_AA, False)
+                    cv2.putText(frame, "Normal", (00,185), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2, cv2.LINE_AA, False)
                     
                 
                     
                 
                 
         cv2.imshow('frame', frame)
-        #if cv2.waitKey(1) & 0xFF == ord('w'):
+        if cv2.waitKey(1) & 0xFF == ord('w'):
             #headpose.t.summary()
-        #    break
+            break
                   
         #out.write(frame)
         

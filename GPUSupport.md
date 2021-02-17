@@ -49,11 +49,14 @@ conda install scikit-image
 
 python GPUTest/DLIBTest.py
 
-python code/i_webcam.py --snapshot models/mysnap_epoch_29.pkl --face_model dlib/mmod_human_face_detector.dat  --video conan-cruise.gif --fps 24
+`python code/i_webcam.py --snapshot models/mysnap_epoch_29.pkl --face_model dlib/mmod_human_face_detector.dat  --video conan-cruise.gif --fps 24`
  --n_frames 100
 
 ## Conclusion
 IT WORKS, IT LIVES!
 
-for some reason my screen doesnt want to output, however i know it works
 Cmake for OpenCV so OpenCV works with CUDA
+
+# DeepHeadPose with GPU Support in Docker Container.
+### obtain anaconda list
+### obtain pip list

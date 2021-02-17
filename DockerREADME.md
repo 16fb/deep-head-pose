@@ -98,7 +98,7 @@ Its quite slow for video
 
 ## Testing ZX Video deep-head-pose
 `conda activate pytorchNew`  
-`python code/i.py --snapshot models/mysnap_epoch_29.pkl --face_model dlib/mmod_human_face_detector.dat  --video conan-cruise.gif --fps 15 --n_frames 100`  
+`python code/i.py --snapshot models/mysnap_epoch_29.pkl --face_model dlib/mmod_human_face_detector.dat  --video conan-cruise.gif --fps 24 --n_frames 100`  
 
 Notes:  
 Had to set face model to take in from args.  
